@@ -31,6 +31,7 @@ class ClienteClass {
       cli.data_nascimento ? cli.data_nascimento : false,
       cli.senha ? cli.senha : null,
       cli.salao_id ? cli.salao_id : null,
+      false
     ];
 
     const id = await this.db.query(
@@ -41,7 +42,8 @@ class ClienteClass {
           endereco,
           data_nascimento,
           senha,
-          salao_id
+          salao_id,
+          isdeleted
             )  VALUES %L RETURNING id`,
         [formData]
       )
