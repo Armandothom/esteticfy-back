@@ -24,10 +24,14 @@
   "homepage": "https://github.com/Armandothom/esteticfy-back#readme",
   "dependencies": {
     "fastify": "^3.0.0",
-    "fastify-plugin": "^3.0.0",
     "fastify-autoload": "^3.3.1",
+    "fastify-cli": "^2.13.0",
+    "fastify-cors": "^6.0.2",
+    "fastify-plugin": "^3.0.0",
+    "fastify-postgres": "^3.6.0",
     "fastify-sensible": "^3.1.0",
-    "fastify-cli": "^2.13.0"
+    "pg": "^8.7.1",
+    "pg-format": "^1.0.4"
   },
   "devDependencies": {
     "tap": "^15.0.9"
