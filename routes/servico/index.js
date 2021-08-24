@@ -15,6 +15,7 @@ module.exports = async function (fastify, opts) {
 
   fastify.get('/:id', async function (request, reply) {
     let rowFromID = await fastify.servicoClass.getById(request.params.id);
+    console.log(rowFromID)
     return rowFromID;
   })
 

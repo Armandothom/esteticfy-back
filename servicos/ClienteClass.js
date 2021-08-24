@@ -24,6 +24,7 @@ class ClienteClass {
   }
 
   async salvarCliente(cli) {
+    await this.checkCPF(cli.cpf);
     const formData = [
       cli.nome ? cli.nome : null,
       cli.cpf ? cli.cpf : null,
@@ -52,6 +53,7 @@ class ClienteClass {
   }
 
   async updateCliente(cli, id) {
+    await this.checkCPF(cli.cpf, id);
     cli = Utils.deleteProperty(["salao_input"], cli);
     const { text, values } = update("cliente", cli
     , { id: id });
@@ -64,6 +66,31 @@ class ClienteClass {
     , { id: id });
     const { rows } = await this.db.query(text, values);
     return id;
+  }
+  async checkCPF(cpf, id = null) {
+    let rowCount = await this.checkCPFCliente(cpf, id);
+    if(rowCount.length > 0) {
+      throw new Error("CPF existente");
+    }
+    rowCount = await this.checkCPFAtendente(cpf, id);
+    if(rowCount.length > 0) {
+      throw new Error("CPF existente");
+    }
+    return;
+  }
+
+  async checkCPFAtendente (cpf, id) {
+    const { rows } = await this.db.query(
+      id ? 'SELECT * FROM atendente WHERE cpf = $1 AND id != $2 AND isdeleted = false' : 'SELECT * FROM atendente WHERE cpf = $1 AND isdeleted = false', id ? [cpf, id] : [cpf],
+    )
+    return rows;
+  }
+
+  async checkCPFCliente (cpf, id) {
+    const { rows } = await this.db.query(
+      id ? 'SELECT * FROM cliente WHERE cpf = $1 AND id != $2 AND isdeleted = false' : 'SELECT * FROM cliente WHERE cpf = $1 AND isdeleted = false', id ? [cpf, id] : [cpf],
+    )
+    return rows;
   }
 
 }

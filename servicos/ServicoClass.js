@@ -17,10 +17,11 @@ class ServicoClass {
   }
 
   async getById (id) {
+    console.log("entrou")
     const { rows } = await this.db.query(
       'SELECT  a.*, b.nome as salao_nome FROM servico as A LEFT JOIN salao as B ON a.salao_id = b.id WHERE a.id = $1', [id],
     )
-    return rows[0]
+    return rows[0];
   }
 
   async salvarServico(servico, salao_id) {
