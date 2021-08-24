@@ -1,9 +1,10 @@
 'use strict'
 
 module.exports = async function (fastify, opts) {
+  fastify.addHook("preHandler", fastify.verifyJWTandLevelDB);
 
   fastify.get('/', async function (request, reply) {
-    let rowsGet = await fastify.clienteClass.getClientes();
+    let rowsGet = await fastify.clienteClass.getClientes(fastify.salao_id);
     return rowsGet;
   })
 

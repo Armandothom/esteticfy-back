@@ -9,6 +9,7 @@ const ClienteClass = require('./servicos/ClienteClass')
 const SalaoClass = require('./servicos/SalaoClass')
 const ServicoClass = require('./servicos/ServicoClass')
 const VendaClass = require('./servicos/VendaClass')
+const LoginClass = require('./servicos/LoginClass')
 
 module.exports = async function (fastify, opts) {
   fastify.register(AutoLoad, {
@@ -23,6 +24,13 @@ module.exports = async function (fastify, opts) {
 
   fastify.register(require('fastify-cors'), { 
   })
+
+  fastify.decorate("verifyJWTandLevelDB", verifyJWTandLevelDB);
+
+  function verifyJWTandLevelDB(request, reply, done) {
+    fastify.salao_id = request.raw.headers['id-salao'];
+    done();
+  }
 
   fastify.register(require('fastify-postgres'), {
     connectionString: 'postgres://postgres:armando98@localhost:5432/postgres'
@@ -48,6 +56,9 @@ module.exports = async function (fastify, opts) {
 
     const vendaClass = new VendaClass(db)
     fastify.decorate('vendaClass', vendaClass) 
+
+    const loginClass = new LoginClass(db)
+    fastify.decorate('loginClass', loginClass) 
   }
 
   fastify.register(fp(decorateFastifyInstance))

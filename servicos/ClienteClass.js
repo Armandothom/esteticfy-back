@@ -9,9 +9,9 @@ class ClienteClass {
     this.db = db;
   }
 
-  async getClientes () {
+  async getClientes (salaoID) {
     const { rows } = await this.db.query(
-      'SELECT a.*, b.nome as salao_nome FROM cliente as A LEFT JOIN salao as B ON a.salao_id = b.id WHERE a.isdeleted != true', [],
+      'SELECT a.*, b.nome as salao_nome FROM cliente as A LEFT JOIN salao as B ON a.salao_id = b.id WHERE a.isdeleted != true AND a.salao_id = $1', [salaoID],
     )
     return rows
   }
