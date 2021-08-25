@@ -10,6 +10,7 @@ module.exports = async function (fastify, opts) {
 
   fastify.post('/', async function (request, reply) {
     let idFromPost = await fastify.clienteClass.salvarCliente(request.body);
+    await fastify.historicoClass.inserirLog(3, 2, fastify.salao_id, fastify.user_id, fastify.user_id);
     return idFromPost;
   })
 
@@ -20,11 +21,13 @@ module.exports = async function (fastify, opts) {
 
   fastify.post('/:id', async function (request, reply) {
     let rowFromID = await fastify.clienteClass.updateCliente(request.body, request.params.id);
+    await fastify.historicoClass.inserirLog(3, 1, fastify.salao_id, fastify.user_id, fastify.user_id);
     return rowFromID;
   })
 
   fastify.post('/delete', async function (request, reply) {
     let rowFromID = await fastify.clienteClass.deleteCliente(request.body.id);
+    await fastify.historicoClass.inserirLog(3, 3, fastify.salao_id, fastify.user_id, fastify.user_id);
     return rowFromID;
   })
 

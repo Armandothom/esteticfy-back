@@ -10,6 +10,7 @@ const SalaoClass = require('./servicos/SalaoClass')
 const ServicoClass = require('./servicos/ServicoClass')
 const VendaClass = require('./servicos/VendaClass')
 const LoginClass = require('./servicos/LoginClass')
+const HistoricoClass = require('./servicos/HistoricoClass')
 
 module.exports = async function (fastify, opts) {
   fastify.register(AutoLoad, {
@@ -63,6 +64,9 @@ module.exports = async function (fastify, opts) {
 
     const loginClass = new LoginClass(db)
     fastify.decorate('loginClass', loginClass) 
+
+    const historicoClass = new HistoricoClass(db)
+    fastify.decorate('historicoClass', historicoClass) 
   }
 
   fastify.register(fp(decorateFastifyInstance))
