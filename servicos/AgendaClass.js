@@ -9,12 +9,18 @@ class AgendaClass {
     this.db = db;
   }
 
-  async getAgendas (salaoID) {
+  async getAgendasCliente (userID) {
+    const { rows } = await this.db.query(
+      'SELECT a.*, b.nome as salao_nome, c.nome as cliente_nome, d.nome as servico_nome FROM agenda as A LEFT JOIN salao as B ON a.salao_id = b.id LEFT JOIN cliente as C on a.cliente_id = c.id LEFT JOIN servico as D on a.servico_id = d.id WHERE a.isdeleted != true AND a.cliente_id = $1', [userID],
+    )
+    return rows
+  }
+
+  async getAgendasAtendente (salaoID) {
     console.log(salaoID)
     const { rows } = await this.db.query(
       'SELECT a.*, b.nome as salao_nome, c.nome as cliente_nome, d.nome as servico_nome FROM agenda as A LEFT JOIN salao as B ON a.salao_id = b.id LEFT JOIN cliente as C on a.cliente_id = c.id LEFT JOIN servico as D on a.servico_id = d.id WHERE a.isdeleted != true AND a.salao_id = $1', [salaoID],
     )
-    console.log(rows)
     return rows
   }
 

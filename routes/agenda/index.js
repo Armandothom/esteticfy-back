@@ -5,7 +5,14 @@ module.exports = async function (fastify, opts) {
 
   fastify.get('/', async function (request, reply) {
     console.log(fastify.salao_id)
-    let rowsGet = await fastify.agendaClass.getAgendas(fastify.salao_id);
+    let rowsGet;
+    console.log(fastify.is_cliente)
+    if(fastify.is_cliente) {
+      rowsGet = await fastify.agendaClass.getAgendasCliente(fastify.user_id);
+    } else {
+      console.log("ATENDENTE")
+      rowsGet = await fastify.agendaClass.getAgendasAtendente(fastify.salao_id);
+    }
     return rowsGet;
   })
 

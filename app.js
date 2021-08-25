@@ -31,7 +31,7 @@ module.exports = async function (fastify, opts) {
     console.log(request.raw.headers)
     fastify.salao_id = request.raw.headers['id-salao'];
     fastify.user_id = request.raw.headers['user-id'],
-    fastify.is_cliente = request.raw.headers['is-cliente'],
+    fastify.is_cliente = request.raw.headers['is-cliente'] == 'true' ? true : false,
 
     done();
   }
