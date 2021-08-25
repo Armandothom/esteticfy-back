@@ -10,11 +10,16 @@ class LoginClass {
   }
 
   async login (body) {
+    console.log("ENVIANDO LOGIN")
     let atendente = await this.getFromAtendente(body.cpf, body.password);
     let cliente = await this.getFromCliente(body.cpf, body.password);
+    console.log(atendente);
+    console.log(cliente)
     if(atendente.length > 0) {
+      atendente[0].isCliente = false;
       return atendente[0];
     } else if(cliente.length > 0) {
+      cliente[0].isCliente = true;
       return cliente[0];
     } else {
       throw new Error("Login inválido");

@@ -28,7 +28,11 @@ module.exports = async function (fastify, opts) {
   fastify.decorate("verifyJWTandLevelDB", verifyJWTandLevelDB);
 
   function verifyJWTandLevelDB(request, reply, done) {
+    console.log(request.raw.headers)
     fastify.salao_id = request.raw.headers['id-salao'];
+    fastify.user_id = request.raw.headers['user-id'],
+    fastify.is_cliente = request.raw.headers['is-cliente'],
+
     done();
   }
 
