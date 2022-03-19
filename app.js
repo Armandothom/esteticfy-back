@@ -38,7 +38,7 @@ module.exports = async function (fastify, opts) {
   }
 
   fastify.register(require('fastify-postgres'), {
-    connectionString: 'postgres://postgres:armando98@localhost:5432/postgres'
+    connectionString: 'postgres://postgres:password123@localhost:5432/postgres'
   })
 
   async function decorateFastifyInstance(fastify) {
